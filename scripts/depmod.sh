@@ -27,10 +27,13 @@ if "$DEPMOD" -b "$tmp_dir" $KERNELRELEASE 2>/dev/null; then
 	if test -e "$tmp_dir/lib/modules/$KERNELRELEASE/modules.dep" -o \
 		-e "$tmp_dir/lib/modules/$KERNELRELEASE/modules.dep.bin"; then
 		depmod_hack_needed=false
+		echo "depmod_hack not needed $tmp_dir ######################" >&2
+		#read userinput
 	fi
 fi
 rm -rf "$tmp_dir"
 if $depmod_hack_needed; then
+	echo "Warning: depmod_hack_needed ######################" >&2
 	symlink="$INSTALL_MOD_PATH/lib/modules/99.98.$KERNELRELEASE"
 	ln -s "$KERNELRELEASE" "$symlink"
 	KERNELRELEASE=99.98.$KERNELRELEASE
@@ -40,8 +43,15 @@ set -- -ae -F System.map
 if test -n "$INSTALL_MOD_PATH"; then
 	set -- "$@" -b "$INSTALL_MOD_PATH"
 fi
+echo "depmod running... $@ ######################" >&2
 "$DEPMOD" "$@" "$KERNELRELEASE"
 ret=$?
+# tmtmtm
+find ../../system/lib/modules/$KERNELRELEASE -name "*.ko" -type f -print |xargs ../../../../../../prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-strip --strip-debug
+find ../../system/lib/modules/$KERNELRELEASE -name "*.ko" -type f -print |xargs cp -t ../../system/lib/modules/
+echo "depmod done $ret ######################" >&2
+#read userinput
+echo "depmod done2 $ret ######################" >&2
 
 if $depmod_hack_needed; then
 	rm -f "$symlink"

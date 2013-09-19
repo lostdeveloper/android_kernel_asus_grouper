@@ -500,7 +500,7 @@ static int bq27541_get_psp(int reg_offset, enum power_supply_property psp,
 		} else {
 			val->intval = bq27541_device->bat_vol;
 		}
-		BAT_NOTICE("voltage_now= %u uV\n", val->intval);
+		//BAT_NOTICE("voltage_now= %u uV\n", val->intval);
 	}
 	if (psp == POWER_SUPPLY_PROP_STATUS) {
 		ret = bq27541_device->bat_status = rt_value;
@@ -521,7 +521,7 @@ static int bq27541_get_psp(int reg_offset, enum power_supply_property psp,
 		} else {
 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
 		}
-		BAT_NOTICE("status: %s ret= 0x%04x\n", status_text[val->intval], ret);
+		//BAT_NOTICE("status: %s ret= 0x%04x\n", status_text[val->intval], ret);
 
 	} else if (psp == POWER_SUPPLY_PROP_TEMP) {
 		ret = bq27541_device->bat_temp = rt_value;
@@ -560,7 +560,7 @@ static int bq27541_get_psp(int reg_offset, enum power_supply_property psp,
 			}
 		}
 		bq27541_device->old_temperature = val->intval = ret;
-		BAT_NOTICE("temperature= %u (0.1¢XC)\n", val->intval);
+		//BAT_NOTICE("temperature= %u (0.1¢XC)\n", val->intval);
 	}
 	return 0;
 }
@@ -659,7 +659,7 @@ static int bq27541_get_capacity(union power_supply_propval *val)
 	bq27541_device->old_capacity = val->intval;
 	bq27541_device->cap_err=0;
 
-	BAT_NOTICE("= %u%% ret= %u\n", val->intval, bq27541_device->bat_capacity);
+	//BAT_NOTICE("= %u%% ret= %u\n", val->intval, bq27541_device->bat_capacity);
 	return 0;
 }
 
