@@ -97,9 +97,9 @@ int usbhost_init(void)
 	int retval;
 
 	// default values
-	usbhost_fixed_install_mode = 1;
+	usbhost_fixed_install_mode = 0;
 	usbhost_hotplug_on_boot = 1;
-	usbhost_fastcharge_in_host_mode = 0;
+	usbhost_fastcharge_in_host_mode = 1;
     printk("usbhost %s FI=%d HP=%d FC=%d\n", __func__, usbhost_fixed_install_mode,
     	usbhost_hotplug_on_boot, usbhost_fastcharge_in_host_mode);
 
